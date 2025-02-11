@@ -29,26 +29,17 @@
             {
                 lock (temperatures)
                 {
-                    temperatures.Add(RandomTemperature());
+                    Random random = new Random();
+                    temperatures.Add(RandomTemperature(random));
                 }
             });
 
-            //for (int i = 0; i < 365; i++)
-            //{
-            //    Thread thread = new Thread(() =>
-            //    {
-            //        lock (temperatures)
-            //        {
-            //            temperatures.Add(RandomTemperature());
-            //        }
-            //    });
-            //    thread.Start();
-            //}
+
         }
 
-        private double RandomTemperature()
+        private double RandomTemperature(Random random)
         {
-            Random random = new Random();
+
             double temp = random.NextDouble() * 40 - 10;
             temp = Math.Round(temp, 1);
             return temp;
