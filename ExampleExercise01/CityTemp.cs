@@ -2,7 +2,7 @@
 {
     internal class CityTemp
     {
-
+        private static ThreadLocal<Random> random = new ThreadLocal<Random>(() => new Random());
         public List<double> temperatures;
         public double mediana;
         public double minTemp;
@@ -29,18 +29,18 @@
             {
                 lock (temperatures)
                 {
-                    Random random = new Random();
-                    temperatures.Add(RandomTemperature(random));
+
+                    temperatures.Add(RandomTemperature());
                 }
             });
 
 
         }
 
-        private double RandomTemperature(Random random)
+        private double RandomTemperature()
         {
 
-            double temp = random.NextDouble() * 40 - 10;
+            double temp = random.Value.NextDouble() * 40 - 10;
             temp = Math.Round(temp, 1);
             return temp;
         }
