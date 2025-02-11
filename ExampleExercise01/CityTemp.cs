@@ -24,17 +24,26 @@
         private void InitializeTemperatures()
         {
             temperatures = new List<double>();
-            for (int i = 0; i < 365; i++)
+
+            Parallel.For(0, 365, i =>
             {
-                Thread thread = new Thread(() =>
+                lock (temperatures)
                 {
-                    lock (temperatures)
-                    {
-                        temperatures.Add(RandomTemperature());
-                    }
-                });
-                thread.Start();
-            }
+                    temperatures.Add(RandomTemperature());
+                }
+            });
+
+            //for (int i = 0; i < 365; i++)
+            //{
+            //    Thread thread = new Thread(() =>
+            //    {
+            //        lock (temperatures)
+            //        {
+            //            temperatures.Add(RandomTemperature());
+            //        }
+            //    });
+            //    thread.Start();
+            //}
         }
 
         private double RandomTemperature()
